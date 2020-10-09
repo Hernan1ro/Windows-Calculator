@@ -8,3 +8,5 @@ console.log(teclas[5].innerHTML);
 teclas.forEach(function(elemento){
    console.log(elemento.textContent); 
 })
+
+
