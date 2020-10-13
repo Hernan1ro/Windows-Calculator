@@ -9,7 +9,6 @@ var d = document,
   cal = true;
 
 function procesador(entrada) {
-  console.log(entrada);
   var val = pantalla.textContent;
   if (entrada == "." && val.indexOf(".") > 1) return;
   if (entrada == "<") {
@@ -81,7 +80,64 @@ function calculador(val) {
       break;
   }
 }
+window.addEventListener("keyup", function (e) {
+  e.preventDefault();
+  var c = e.which || e.keyCode; 
+  teclas.forEach(function(e){
+    keyCodeClick(e,c);
+  });
+});
+function keyCodeClick(elem, keyCode){
+  var entrada = elem.textContent, code=0;
+  if (entrada=="") return;
+  switch(entrada){
+    case "C":
+      code = 27;
+      break;
+    case "<":
+      code = 8;
+      break;
+    case "X":
+      code = 106;
+      break;
+    case "+":
+      code = 107;
+      break;
+    case "/":
+      code = 111;
+      break;
+    case "=":
+      code = 13;
+      break;
+    case "-":
+      code =109;
+      break;
+    case ".":
+      code =110;
+      break;
+    default:
+      code = entrada.charCodeAt(0);
+      break;
+  }
+  if(isNumKeyPad(code)){
+    var numPad = convertNumPadKey(code);
+    if(keyCode==numPad){
+     elem.click(); 
+    }
+  }
+  if (keyCode==code){
+    elem.click();
+    return;
+  }
+}
 
+function isNumKeyPad(numkey){
+  if (numkey>=48 && numkey<=57) return true;
+  return false;
+}
+function convertNumPadKey(numkey){
+  return numkey+48;
+}
 teclas.forEach(function (elemento) {
   elemento.addEventListener("click", function () {
     var entrada = this.textContent;
@@ -89,5 +145,5 @@ teclas.forEach(function (elemento) {
     if (entrada != "") {
       procesador(entrada);
     }
-  });
+  })  
 });
